@@ -7,8 +7,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/Esword618/xhs-go/consts"
-	"github.com/Esword618/xhs-go/utils"
+	"github.com/CockyCat/xhs-rpa/consts"
+	"github.com/CockyCat/xhs-rpa/utils"
 	"github.com/bitly/go-simplejson"
 	"github.com/imroc/req/v3"
 	"github.com/playwright-community/playwright-go"

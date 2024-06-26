@@ -3,7 +3,7 @@ module xhs
 go 1.21
 
 require (
-	github.com/Esword618/xhs-go v0.0.0-20230701142252-9e2afb7f5fc0
+	github.com/CockyCat/xhs-rpa v0.1.0
 	github.com/bitly/go-simplejson v0.5.1
 	github.com/imroc/req/v3 v3.43.7
 	github.com/playwright-community/playwright-go v0.4401.1

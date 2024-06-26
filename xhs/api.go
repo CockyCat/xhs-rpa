@@ -3,8 +3,9 @@ package xhs
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/Esword618/xhs-go/consts"
-	"github.com/Esword618/xhs-go/utils"
+
+	"github.com/CockyCat/xhs-rpa/consts"
+	"github.com/CockyCat/xhs-rpa/utils"
 	"github.com/bitly/go-simplejson"
 )
 
