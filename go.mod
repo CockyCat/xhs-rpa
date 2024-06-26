@@ -1,6 +1,6 @@
-module github.com/Esword618/xhs-go
+module github.com/CockyCat/xhs-rpa
 
-go 1.20
+go 1.21
 
 require (
 	github.com/imroc/req/v3 v3.37.2
