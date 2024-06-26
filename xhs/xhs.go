@@ -3,14 +3,15 @@ package xhs
 import (
 	"errors"
 	"fmt"
+	"net/http"
+	"net/url"
+	"strings"
+
 	"github.com/Esword618/xhs-go/consts"
 	"github.com/Esword618/xhs-go/utils"
 	"github.com/bitly/go-simplejson"
 	"github.com/imroc/req/v3"
 	"github.com/playwright-community/playwright-go"
-	"net/http"
-	"net/url"
-	"strings"
 )
 
 type IXhsClient interface {
@@ -72,7 +73,11 @@ func (x *xhsClient) Initialize(cookieStr string, headless ...bool) error {
 	// browserContext
 	browserContext, err := browser.NewContext(playwright.BrowserNewContextOptions{
 		UserAgent: playwright.String("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"),
-		Viewport: &playwright.ViewportSize{
+		//Viewport: &playwright.ViewportSize{
+		//	Width:  1520,
+		//	Height: 1080,
+		//},
+		Viewport: &playwright.Size{
 			Width:  1520,
 			Height: 1080,
 		},
@@ -80,9 +85,12 @@ func (x *xhsClient) Initialize(cookieStr string, headless ...bool) error {
 	if err != nil {
 		return fmt.Errorf("failed to create browser context: %v", err)
 	}
-	err = browserContext.AddInitScript(playwright.BrowserContextAddInitScriptOptions{
-		Script: playwright.String(consts.StealthMinJs),
-	})
+	err = browserContext.AddInitScript(
+		playwright.Script{
+			Content: playwright.String(consts.StealthMinJs),
+		},
+	)
+
 	if err != nil {
 		return fmt.Errorf("执行js报错: %v", err)
 	}
@@ -91,8 +99,8 @@ func (x *xhsClient) Initialize(cookieStr string, headless ...bool) error {
 	cookiemap := utils.ConvertStrCookieToDict(cookieStr)
 	for key, value := range cookiemap {
 		cookiesP = append(cookiesP, playwright.OptionalCookie{
-			Name:   playwright.String(key),
-			Value:  playwright.String(value),
+			Name:   *playwright.String(key),
+			Value:  *playwright.String(value),
 			Domain: playwright.String(".xiaohongshu.com"),
 			Path:   playwright.String("/"),
 		})
@@ -104,7 +112,7 @@ func (x *xhsClient) Initialize(cookieStr string, headless ...bool) error {
 		})
 	}
 
-	err = browserContext.AddCookies(cookiesP...)
+	err = browserContext.AddCookies(cookiesP)
 	if err != nil {
 		return fmt.Errorf("add cookie 失败: %v", err)
 	}
